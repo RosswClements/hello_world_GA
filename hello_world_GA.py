@@ -11,7 +11,7 @@ def main():
 
 # generate random string with digits letters and special characters
 def generate_candidate_string(input_string):
-    candidate_string = string.ascii_letters + string.digits + string.punctuation
+    candidate_string = string.ascii_letters + string.digits + string.punctuation+ ' '
     candidate = ''.join(random.choice(candidate_string) for _ in range(len(input_string)))
     return candidate
 
