@@ -4,36 +4,32 @@ import string
 population_size = 30
 population = []
 goal_found = ''
-#new_population = list(range(population_size))
 new_population = []
 input_string = input("Please enter a string: ")
 best_fit = len(input_string)
-#Hfitness = len(input_string)
-mutation_rate = 20
-
+mutation_rate = 30
 
 def main():
     global population
     global best_fit
     gen_count = 0
-
+    
     init_pop(population_size, input_string, population)
-    #print(population)
+   
     #init new pop just for ease of working with the list
     init_pop(population_size, input_string, new_population)
-    #print(new_population)
+    
 
     while best_fit != 0:
         eval_pop(population, input_string)
         crossover(new_population)
-        #print(new_population)
+        
         mutate(new_population)
         gen_count += 1
-        #print(f"{new_population} + {gen_count}")
+        
         population = new_population
-        print(f"{population} + {gen_count}")
-    print(goal_found)
-    print("done")
+        print(f"| {population[0]} | Generation: {gen_count} |")
+    print(f"| {goal_found} | Solution Found !|")
 
 # generate random string with digits, letters, spaces, and special characters
 def generate_candidate_string(input_string):
@@ -63,6 +59,7 @@ def get_fitness(candidate_string):
 def eval_pop(population, input_string):
     global best_fit
     global goal_found
+    global new_population
     fitness = best_fit
     population.sort(key=get_fitness)
     for pop in population:
@@ -73,70 +70,10 @@ def eval_pop(population, input_string):
             goal_found = pop
             break
     new_population = population
-    print(get_fitness(new_population[0]))
-    # second_fit = len(input_string)
-    # third_fit = len(input_string)
-    # fourth_fit = len(input_string)
-    # for pop in population:
-    #     fitness = get_fitness(pop)
-    #     # if fitness is 0 solution is found
-    #     print(get_fitness( population[0]))
-    #     if fitness == 0:
-    #         best_fit = 0
-    #         break
-    #     elif fitness <= best_fit and pop != new_population[0]:
-    #         #add to index 0 as elitism
-    #         # if pop == new_population[0]:
-    #         #     break
-    #         # else:
-    #         new_population.pop(0)
-    #         new_population.insert(0, pop)
-    #         #and the top 2 fittest to corresponding indexes for crossover
-    #         new_population.pop(1)
-    #         new_population.insert(1, pop)
-    #         best_fit = fitness
-
-    #     elif fitness == best_fit and pop == new_population[0] or fitness == best_fit and pop == new_population[1]:
-    #         new_population.pop(2)
-    #         new_population.insert(2, generate_candidate_string(input_string))
-
-    #     elif fitness == best_fit and pop != new_population[0] and pop != new_population[1]:
-    #         new_population.pop(2)
-    #         new_population.insert(2, pop)
-    #         new_population.pop(5)
-    #         new_population.insert(5, pop)
-    #         #second_fit = fitness
-        
-    #     elif fitness == best_fit and pop != new_population[2]:
-    #         # if pop == new_population[3]:
-    #         #     break
-    #         #else:
-    #         new_population.pop(3)
-    #         new_population.insert(3, pop)
-    # #        second_fit = fitness
-    #     elif fitness == best_fit and pop != new_population[3]:
-    #         # if pop == new_population[4]:
-    #         #     break
-    #         #else:
-    #         new_population.pop(4)
-    #         new_population.insert(4, pop)
-    #         second_fit = fitness        
-    #     else:
-    #         pass
-    # #print("new population before cross")
-    # #print(new_population)
-    # for pop in range(len(new_population[5:])):
-    #     new_population.pop()
-    # for pop in range(population_size-5):
-    #     new_population.append(generate_candidate_string(input_string))
-    # #print("new population after int removal")
-    # #print(new_population)
-    # return new_population
 
 def crossover(new_population):
-    parent1 = new_population[1]
 
-    #print(parent1)
+    parent1 = new_population[1]
     parent2 = new_population[2]
     parent3 = new_population[3]
     parent4 = new_population[4]
@@ -235,18 +172,9 @@ def mutate(new_population):
         selected_pop = list(new_population[rand_pop])
         rand_gene = random.randint(0, len(selected_pop)-1)
         candidate_string = string.ascii_letters + string.digits + string.punctuation+ ' '
-       # print(selected_pop)
         selected_pop[rand_gene] = random.choice(candidate_string)
         new_population[rand_pop] = ''.join(selected_pop)
-       # print(selected_pop)
         mutation_counter += 1
-    #print(new_population)
     return new_population
-
-        
-            
-
-
-
 
 main()
