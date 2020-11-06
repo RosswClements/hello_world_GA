@@ -7,7 +7,7 @@ goal_found = ''
 new_population = []
 input_string = input("Please enter a string: ")
 best_fit = len(input_string)
-mutation_rate = 30
+mutation_count = 30
 
 def main():
     global population
@@ -56,6 +56,7 @@ def get_fitness(candidate_string):
     return fitness
 
 #evaluate population and begin a new population from the fittest
+#if fitness 0 is found, break
 def eval_pop(population, input_string):
     global best_fit
     global goal_found
@@ -71,6 +72,7 @@ def eval_pop(population, input_string):
             break
     new_population = population
 
+#create 12 children from 4 parents by using uniform crossover
 def crossover(new_population):
 
     parent1 = new_population[1]
@@ -165,9 +167,10 @@ def crossover(new_population):
     for _ in range(population_size-12):
         new_population.append(generate_candidate_string(input_string))
 
+#change a random number of genes up to the mutation count
 def mutate(new_population):
     mutation_counter = 0
-    while mutation_counter < mutation_rate:
+    while mutation_counter < mutation_count:
         rand_pop = random.randint(0, len(new_population)-1)
         selected_pop = list(new_population[rand_pop])
         rand_gene = random.randint(0, len(selected_pop)-1)
